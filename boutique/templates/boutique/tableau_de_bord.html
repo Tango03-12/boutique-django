@@ -1,0 +1,83 @@
+{% extends 'boutique/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Tableau de Bord</h2>
+
+    <div class="row">
+        <!-- Carte des ventes totales -->
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Total des ventes</div>
+                <div class="card-body">
+                    <h3 class="card-title">{{ total_ventes }} FCFA</h3>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Carte des ventes de la semaine -->
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Ventes cette semaine</div>
+                <div class="card-body">
+                    <h3 class="card-title">{{ ventes_semaine }}</h3>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Carte des produits en rupture de stock -->
+        <div class="col-md-4">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-header">Produits en rupture</div>
+                <div class="card-body">
+                    <h3 class="card-title">{{ produits_rupture }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tableau des produits les plus vendus -->
+    <div class="card mt-4">
+        <div class="card-header bg-info text-white">Produits les plus vendus</div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Produit</th>
+                        <th>Quantité vendue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for produit in produits_plus_vendus %}
+                    <tr>
+                        <td>{{ produit.produit__nom }}</td>
+                        <td>{{ produit.total_vendu }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="2">Aucune donnée disponible</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Statistiques des modes de paiement -->
+    <div class="card mt-4">
+        <div class="card-header bg-warning text-dark">Répartition des modes de paiement</div>
+        <div class="card-body">
+            <ul class="list-group">
+                {% for paiement in paiement_statistiques %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ paiement.mode_paiement }}
+                    <span class="badge bg-primary rounded-pill">{{ paiement.nombre }}</span>
+                </li>
+                {% empty %}
+                <li class="list-group-item">Aucune donnée disponible</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'boutique/base.html' %}
+{% load static %}
+
+{% block title %}Boutique{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Notre Boutique</h1>
+    <a href="{% url 'ajouter_produit' %}" class="btn btn-info">Ajouter un produit</a>
+
+    <!-- {% if not request.session.client_id %}
+        <div class="alert alert-warning">
+            Vous devez sélectionner un client avant d'ajouter des produits au panier.
+            <a href="{% url 'ajouter_client' %}" class="btn btn-info btn-sm">Sélectionner un client</a>
+        </div>
+    {% endif %} -->
+
+    <!-- <button {% if not request.session.client_id %}disabled{% endif %}>Ajouter</button> -->
+
+    <div class="row">
+        {% for produit in produits %}
+        <div class="col-md-4">
+            <div class="product-item">
+                {% if produit.image %}
+                    <img src="{{ produit.image.url }}" class="img-fluid">
+                {% else %}
+                    <img src="{% static 'images/default-product.jpg' %}" class="img-fluid">
+                {% endif %}
+
+                <h3>{{ produit.nom }}</h3>
+                <p>{{ produit.prix }} FCFA</p>
+                <a href="{% url 'ajouter_au_panier' produit.id %}" class="btn btn-primary">Ajouter au panier</a>
+                <a href="{% url 'detail_produit' produit.id %}" class="btn btn-danger">Voir détails</a>
+            </div>
+        </div>
+        {% empty %}
+        <p>Aucun produit disponible pour le moment.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

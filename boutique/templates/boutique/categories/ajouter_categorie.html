@@ -1,0 +1,14 @@
+{% extends 'boutique/base.html' %}
+
+{% block content %}
+<h2>Ajouter une Catégorie</h2>
+
+<!-- Formulaire d'ajout de catégorie -->
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Ajouter</button>
+    <a href="{% url 'liste_categories' %}" class="btn btn-secondary">Voir la liste des catégories</a>
+</form>
+
+{% endblock %}

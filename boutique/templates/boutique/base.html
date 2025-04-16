@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Boutiquee{% endblock %}</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+</head>
+<body>
+
+    <!-- Start Header/Navigation -->
+    <nav class="custom-navbar navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}">Boutiquee<span>.</span></a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsBoutique">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsBoutique">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'shop' %}">Boutique</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link position-relative" href="{% url 'cart' %}">
+                            Panier
+                            <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">
+                                {{ panier|length }}
+                            </span>
+                        </a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'logout_view' %}">Déconnexion</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'tableau_de_bord' %}">Dashboard</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="btn btn-outline-light me-2" href="{% url 'login_view' %}">Se connecter</a></li>
+                        <li class="nav-item"><a class="btn btn-primary" href="{% url 'register' %}">S'inscrire</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End Header/Navigation -->
+
+    <!-- Messages Flash -->
+    <div class="container mt-3">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="container mt-4">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Start Footer -->
+    <footer class="footer-section bg-dark text-light mt-5 py-4">
+        <div class="container text-center">
+            <p>© 2025 Boutique - Tous droits réservés</p>
+            <div>
+                <a href="#" class="text-light me-3">Facebook</a>
+                <a href="#" class="text-light me-3">Twitter</a>
+                <a href="#" class="text-light">Instagram</a>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer -->
+
+    <!-- JS -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

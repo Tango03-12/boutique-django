@@ -1,0 +1,48 @@
+{% extends 'boutique/base.html' %}
+{% load custom_filters %}
+
+{% block content %}
+<h1>Votre Panier</h1>
+<p>Voici les produits que vous avez ajoutés à votre panier.</p>
+    {% if not client %}
+    <p>Aucun client sélectionné.</p>
+    <a href="{% url 'ajouter_client' %}" class="btn btn-info">Ajouter un client</a>
+    {% else %}
+    <p><strong>Client :</strong> {{ client.nom }}</p>
+    <a href="{% url 'changer_client' %}" class="btn btn-warning">Changer de client</a>
+    {% endif %}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Produit</th>
+            <th>Quantité</th>
+            <th>Prix unitaire</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in panier_détaillé %}
+        <tr>
+            <td>{{ item.produit.nom }}</td>
+            <td>{{ item.quantite }}</td>
+            <td>{{ item.produit.prix }} FCFA</td>
+            <td>{{ item.total|floatformat:2 }} FCFA</td>
+            <td>
+                <a href="{% url 'retirer_produit' item.produit.id %}" class="btn btn-danger">Retirer</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Votre panier est vide.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if panier %}
+    <a href="{% url 'valider_commande' %}" class="btn btn-success mt-3">Valider la commande</a>
+{% endif %}
+
+{% endblock %}

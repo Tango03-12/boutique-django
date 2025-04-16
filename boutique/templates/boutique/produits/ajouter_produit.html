@@ -1,0 +1,17 @@
+<!-- ajouter_produit.html -->
+{% extends 'boutique/base.html' %}
+{% load static %}
+{% block content %}
+<h2>{% if form.instance.id %}Modifier{% else %}Ajouter{% endif %} un Produit</h2>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Enregistrer</button>
+    <a href="{% url 'liste_produits' %}" class="btn btn-secondary">Annuler</a>
+</form>
+
+<!-- Bouton pour ajouter une catégorie -->
+<div class="mt-4">
+    <a href="{% url 'ajouter_categorie' %}" class="btn btn-info">Ajouter une catégorie</a>
+</div>
+{% endblock %}

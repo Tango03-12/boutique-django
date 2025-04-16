@@ -1,0 +1,26 @@
+{% extends 'boutique/base.html' %}
+{% load static %}
+
+{% block title %}{{ produit.nom }} - Détails{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            {% if produit.image %}
+                <img src="{{ produit.image.url }}" class="img-fluid" alt="{{ produit.nom }}">
+            {% else %}
+                <img src="{% static 'img/default.jpg' %}" class="img-fluid" alt="Image non disponible">
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h1>{{ produit.nom }}</h1>
+            <p>{{ produit.description }}</p>
+            <h3>{{ produit.prix }} FCFA</h3>
+            <p><strong>Stock :</strong> {{ produit.quantite_stock }}</p>
+            <a href="{% url 'ajouter_au_panier' produit.id %}" class="btn btn-primary">Ajouter au panier</a>
+            <a href="{% url 'shop' %}" class="btn btn-secondary">Retour à la boutique</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

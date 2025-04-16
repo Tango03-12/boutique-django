@@ -1,0 +1,42 @@
+{% extends 'boutique/base.html' %}
+{% load static %}
+
+{% block title %}Facture #{{ vente.id }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Facture #{{ vente.id }}</h2>
+
+    <p><strong>Date :</strong> {{ vente.date_vente|date:"d/m/Y H:i" }}</p>
+    <p><strong>Client :</strong> {{ vente.client.nom }}</p>
+
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Prix unitaire</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in vente.details.all %}
+            <tr>
+                <td>{{ item.produit.nom }}</td>
+                <td>{{ item.quantite }}</td>
+                <td>{{ item.prix_unitaire }} FCFA</td>
+                <td>{{ item.quantite|floatformat:0|add:"0"|floatformat }} x {{ item.prix_unitaire }} = {{ item.quantite|floatformat:0|add:"0"|floatformat|floatformat:0|add:"0"|floatformat|add:item.prix_unitaire }} FCFA</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h4 class="text-end">Total : <strong>{{ vente.total }} FCFA</strong></h4>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'shop' %}" class="btn btn-primary">Retour à l'accueil</a>
+        <!-- Tu peux aussi ajouter un bouton pour imprimer -->
+        <button class="btn btn-secondary" onclick="window.print()">Imprimer</button>
+    </div>
+</div>
+{% endblock %}

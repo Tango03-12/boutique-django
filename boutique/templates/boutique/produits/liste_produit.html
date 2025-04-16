@@ -1,0 +1,36 @@
+{% extends 'boutique/base.html' %}
+{% load static %}
+
+{% block title %}Boutique{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Notre Boutique</h1>
+
+    <!-- Formulaire de recherche -->
+    <form method="GET" action="{% url 'rechercher_produit' %}" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Rechercher un produit..." value="{{ request.GET.q }}">
+            <button type="submit" class="btn btn-secondary">Rechercher</button>
+        </div>
+    </form>
+
+    <a href="{% url 'ajouter_produit' %}" class="btn btn-info mb-3">Ajouter un produit</a>
+
+    <div class="row">
+        {% for produit in produits %}
+        <div class="col-md-4">
+            <div class="product-item">
+                <img src="{{ produit.image.url }}" class="img-fluid">
+                <h3>{{ produit.nom }}</h3>
+                <p>{{ produit.prix }} FCFA</p>
+                <a href="{% url 'ajouter_au_panier' produit.id %}" class="btn btn-primary">Ajouter au panier</a>
+                <a href="{% url 'detail_produit' produit.id %}" class="btn btn-danger">Voir détails</a>
+            </div>
+        </div>
+        {% empty %}
+        <p>Aucun produit disponible pour le moment.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

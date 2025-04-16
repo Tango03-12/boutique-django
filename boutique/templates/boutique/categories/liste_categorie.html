@@ -1,0 +1,11 @@
+<!-- liste_categories.html -->
+{% extends 'boutique/base.html' %}
+{% block content %}
+<h2>Catégories</h2>
+<ul>
+    {% for categorie in categories %}
+    <li>{{ categorie.nom }} <a href="{% url 'supprimer_categorie' categorie.id %}">Supprimer</a></li>
+    {% endfor %}
+</ul>
+<a href="{% url 'ajouter_categorie' %}" class="btn btn-primary">Ajouter une catégorie</a>
+{% endblock %}

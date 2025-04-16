@@ -1,0 +1,35 @@
+{% extends "boutique/base.html" %}
+{% block title %}Liste des clients{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Liste des clients</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Téléphone</th>
+                <th>Email</th>
+                <th>Date d'ajout</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in clients %}
+            <tr>
+                <td>{{ client.nom }}</td>
+                <td>{{ client.telephone }}</td>
+                <td>{{ client.email|default:"-" }}</td>
+                <td>{{ client.date_ajout|date:"d/m/Y H:i" }}</td>
+                <td>
+                    <a href="{% url 'ajouter_vente' client.id %}" class="btn btn-success btn-sm">Nouvelle vente</a>
+                    <!-- Tu peux aussi ajouter un bouton pour voir ses achats par ex -->
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5">Aucun client enregistré.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

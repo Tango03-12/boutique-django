@@ -1,0 +1,40 @@
+{% extends 'boutique/base.html' %}
+{% load static %}
+
+{% block title %}Accueil - Boutique{% endblock %}
+
+{% block content %}
+<div class="hero text-center bg-light py-5">
+    <div class="container">
+        <h1>Bienvenue dans notre boutique</h1>
+        <p>Découvrez nos produits de qualité.</p>
+        <a href="{% url 'shop' %}" class="btn btn-secondary">Voir la boutique</a>
+    </div>
+</div>
+
+<div class="product-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Produits populaires</h2>
+        <div class="row">
+            {% for produit in produits %}
+            <div class="col-md-4">
+                <div class="product-item card mb-4 shadow-sm text-center">
+                    {% if produit.image %}
+                        <img src="{{ produit.image.url }}" class="card-img-top img-fluid" alt="{{ produit.nom }}">
+                    {% else %}
+                        <img src="{% static 'images/default-product.jpg' %}" class="card-img-top img-fluid" alt="Image par défaut">
+                    {% endif %}
+                    <div class="card-body">
+                        <h3 class="card-title">{{ produit.nom }}</h3>
+                        <p class="card-text"><strong>{{ produit.prix }} FCFA</strong></p>
+                        <a href="{% url 'ajouter_au_panier' produit.id %}" class="btn btn-primary">Ajouter au panier</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+                <p class="text-center">Aucun produit disponible pour le moment.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
